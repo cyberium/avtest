@@ -1,0 +1,6 @@
+*.opendb
+
+*.sdf
+avtest/Debug*/
+ipch/AVTEST-110741bd*/
+.vs/avtest/v14*/
