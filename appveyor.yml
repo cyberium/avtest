@@ -73,4 +73,3 @@ deploy:
     on:
       branch: master                # release from master branch only
       appveyor_repo_tag: false      # deploy on tag push only
-      do_rel: true
