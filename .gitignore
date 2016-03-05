@@ -1,4 +1,10 @@
 *.opendb
 *.sdf
-bin
 .vs
+*.log
+*.obj
+*.pch
+*.tlog
+*.idb
+*.pdb
+bin
