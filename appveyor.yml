@@ -51,4 +51,4 @@ test: off
 
 artifacts:
   - path: bin
-    name: avtest.zip
+    name: avtest$(platform)$(configuration)
