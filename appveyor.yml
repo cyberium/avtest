@@ -43,13 +43,13 @@ branches:
 build:
   project: C:\projects\avtest\win\avtest.sln              # path to Visual Studio solution or project
   parallel: true                                          # enable MSBuild parallel builds
-  verbosity: quiet                                        # MSBuild verbosity level (quiet|minimal|normal|detailed)
+  verbosity: detailed                                     # MSBuild verbosity level (quiet|minimal|normal|detailed)
 
 test: off
 
-#after_build:
-    
+after_build:
+  - dir "bin/$(platform)_$(configuration)"
 
 artifacts:
-  - path: C:\project\avtest\bin
+  - path: "bin/$(platform)_$(configuration)"
     name: avtest.zip
