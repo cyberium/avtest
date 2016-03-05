@@ -51,4 +51,4 @@ test: off
 
 artifacts:
   - path: bin
-    name: avtest$(platform)$(configuration)
+    name: $(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)
