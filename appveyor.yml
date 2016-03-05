@@ -52,5 +52,5 @@ after_build:
   - dir bin\x64_Release
 
 artifacts:
-  - path: "bin\$(platform)_$(configuration)"
+  - path: bin\$(platform)_$(configuration)
     name: avtest.zip
