@@ -54,7 +54,7 @@ test: off
 #after_build:
 
 artifacts:
-  - path: bin\$(platform)_$()configuration)
+  - path: bin\$(platform)_$(configuration)
     name: $(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)
 
 # Deploy to GitHub Releases http://www.appveyor.com/docs/deployment/github
