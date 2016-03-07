@@ -71,8 +71,8 @@ deploy:
     description: 'Snapshot v$(appveyor_build_version)'
     # github automatically does source zip/tarball for us
     artifact: $(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)
-    draft: false
-    prerelease: true
+    draft: true
+    prerelease: false
     on:
       branch: master                # release from master branch only
       appveyor_repo_tag: false      # deploy on tag push only
