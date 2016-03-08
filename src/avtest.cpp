@@ -7,7 +7,7 @@
 
 int main()
 {
-    printf("Hello the world\r\n");
+    printf("Hello World\r\n");
     system("pause");
     return 0;
 }
