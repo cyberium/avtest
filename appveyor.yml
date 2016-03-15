@@ -88,10 +88,10 @@ before_deploy:
             if ($tagData.target_commitish -ne $commitHash)
             {
                 $id = $tagData.id;
-                $delbaseReleaseUrl = "$baseReleaseUrl/$id" + "?access_token=$token"
+                $delBaseReleaseUrl = "$baseReleaseUrl/$id" + "?access_token=$token"
                 Write-Host "Deleting release $releaseVersion..." -f Yellow;
                 $delReleaseParams = @{
-                    Uri = $baseReleaseUrl
+                    Uri = $delBaseReleaseUrl
                     Method = "DELETE"
                 }
                 $wr_error = 'True';
