@@ -74,6 +74,9 @@ before_deploy:
         $env:COMMIT_DATE=get-date $env:APPVEYOR_REPO_COMMIT_TIMESTAMP -format  "dd-MM-yyyy HH:mm";
         function Delete-Github-Release($gitHubRepository, $releaseVersion, $commitHash, $token)
         {
+            echo $gitHubRepository;
+            echo $releaseVersion;
+            echo $commitHash;
             $baseReleaseUrl = "https://api.github.com/repos/$gitHubRepository/releases";
             $ref_endpoint = "https://api.github.com/repos/$gitHubRepository/git/refs/tags"
             $getReleaseId = @{
@@ -174,7 +177,8 @@ before_deploy:
                 break;
             }
         }
-        Delete-Github-Release $env:APPVEYOR_REPO_NAME "Last_$env:platform_$env:configuration_build" $env:APPVEYOR_REPO_COMMIT "$env:SEC_ACCESS_TOKEN"
+        $buildName = "Last_" + "$env:platform" + "_" + "$env:configuration" + "_build"
+        Delete-Github-Release $env:APPVEYOR_REPO_NAME $buildName $env:APPVEYOR_REPO_COMMIT "$env:SEC_ACCESS_TOKEN"
 
 deploy:
   - provider: GitHub
