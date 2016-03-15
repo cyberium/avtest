@@ -15,6 +15,7 @@ environment:
   BOOST_ROOT: C:\Libraries\boost_1_59_0
   BOOST_LIBRARYDIR_WIN32: C:\Libraries\boost_1_59_0\lib32-msvc-14.0
   BOOST_LIBRARYDIR_WIN64: C:\Libraries\boost_1_59_0\lib64-msvc-14.0
+  RELEASE_NAME: "Last_$(APPVEYOR_PROJECT_NAME)_PreBuild"
   SEC_ACCESS_TOKEN:
         secure: GXsXxwHSSt1y+ae3C6A0csN+dCQxPW8w98SGwl8cqzqPDhKKbvFJ37eJCCDeNIm2
 
@@ -71,7 +72,6 @@ artifacts:
 # scripts to run before deployment
 before_deploy:
     ps: |
-        $env:COMMIT_DATE=get-date $env:APPVEYOR_REPO_COMMIT_TIMESTAMP -format  "dd-MM-yyyy HH:mm";
         function Delete-Github-Release($gitHubRepository, $releaseVersion, $commitHash, $token)
         {
             $baseReleaseUrl = "https://api.github.com/repos/$gitHubRepository/releases";
@@ -114,16 +114,16 @@ before_deploy:
                 if ($wr_error -eq 'False' -or $delTagResult.StatusCode -eq 204) { Write-Host "$releaseVersion is deleted" -f Green; } else { Write-Host "ERROR cannot delete $releaseVersion" -f Red; }
                 return;
             }
+            else { Write-Host "Skipping tag deletion because its same commit $relName..." -f Yellow; }
         }
-        $buildName = "Last_" + "$env:platform" + "_" + "$env:configuration" + "_build"
-        Delete-Github-Release $env:APPVEYOR_REPO_NAME $buildName $env:APPVEYOR_REPO_COMMIT "$env:SEC_ACCESS_TOKEN"
+        Delete-Github-Release $env:APPVEYOR_REPO_NAME $env:RELEASE_NAME $env:APPVEYOR_REPO_COMMIT "$env:SEC_ACCESS_TOKEN"
 
 deploy:
   - provider: GitHub
     auth_token: $(SEC_ACCESS_TOKEN)
-    release: 'Last_$(APPVEYOR_PROJECT_NAME)_PreBuild' # name of the tag used
-    description: 'Binaries of commit $(APPVEYOR_REPO_COMMIT) \n$(APPVEYOR_REPO_COMMIT_MESSAGE)\nCommit date $(COMMIT_DATE)'
-    artifact: $(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)
+    release: $(RELEASE_NAME) # name of the tag used
+    description: "Binaries of commit $(APPVEYOR_REPO_COMMIT) \n$(APPVEYOR_REPO_COMMIT_MESSAGE)"
+    artifact: "$(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)"
     draft: false
     # force_update: true # if release already exist force the details update
     prerelease: true
