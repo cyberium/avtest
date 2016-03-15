@@ -79,9 +79,9 @@ deploy:
     description: 'Binaries of commit $(APPVEYOR_REPO_COMMIT) \n$(APPVEYOR_REPO_COMMIT_MESSAGE)\nCommit date $(COMMIT_DATE)'
     # github automatically does source zip/tarball for us
     artifact: $(APPVEYOR_PROJECT_NAME)_$(platform)_$(configuration)
-    draft: true
+    draft: false
     force_update: true # if release already exist force the details update
-    prerelease: false
+    prerelease: true
     on:
       branch: master                # release from master branch only
       appveyor_repo_tag: false      # deploy on tag push only
