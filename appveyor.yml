@@ -107,7 +107,6 @@ before_deploy:
             }
         
             $tagData = ConvertFrom-Json $result.Content;
-            echo $tagData;
         
             $deleteAll = 'False';
             if ($tagData.target_commitish -ne $commitHash)
@@ -174,7 +173,7 @@ before_deploy:
                     Write-Host "ERROR cannot delete $releaseVersion" -f Red
                 }
         
-                break;
+                return;
             }
         }
         $buildName = "Last_" + "$env:platform" + "_" + "$env:configuration" + "_build"
