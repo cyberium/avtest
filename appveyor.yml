@@ -81,8 +81,7 @@ before_deploy:
             $releasesData = ConvertFrom-Json $result.Content; $releaseInfos = $null;
             if ($releasesData -is [system.array] -and $releasesData.Count -ge "1") {foreach ($releaseItr in $releasesData) {if ($releaseItr.name -eq $releaseVersion) { $releaseInfos = $releaseItr; break;}}}
             if ($releaseInfos -eq $null) {Write-Host "Release $releaseVersion is not found, nothing to delete." -f Yellow; return;}
-            if ($releaseInfos.target_commitish -ne $commitHash)
-            {
+            if ($releaseInfos.target_commitish -ne $commitHash){
                 $id = $releaseInfos.id;
                 $delBaseReleaseUrl = "$baseReleaseUrl/$id" + "?access_token=$token"
                 Write-Host "Deleting release $releaseVersion..." -f Yellow;
@@ -94,8 +93,7 @@ before_deploy:
                 $delTagBaseUrl = "$ref_endpoint/$releaseVersion" + "?access_token=$token";
                 $delTagParams = @{Uri = $delTagBaseUrl; Method = "DELETE";}
                 $wr_error = 'True'; try {$delTagResult = Invoke-WebRequest @delTagParams;} catch {$wr_error = 'False';}
-                if ($wr_error -eq 'False' -or $delTagResult.StatusCode -eq 204) {Write-Host "$releaseVersion is deleted" -f Green;} else {Write-Host "ERROR cannot delete $releaseVersion" -f Red;}
-            }
+                if ($wr_error -eq 'False' -or $delTagResult.StatusCode -eq 204) {Write-Host "$releaseVersion is deleted" -f Green;} else {Write-Host "ERROR cannot delete $releaseVersion" -f Red;}}
             else {Write-Host "Skipping tag delete because its same commit!" -f Yellow;}}
         Delete-Github-Release $env:APPVEYOR_REPO_NAME $env:RELEASE_NAME $env:APPVEYOR_REPO_COMMIT "$env:SEC_ACCESS_TOKEN"
 
