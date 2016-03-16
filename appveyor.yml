@@ -28,13 +28,13 @@ configuration:
 init:
   - cmd: cmake --version
   - cmd: msbuild /version
-  - cmd: echo .
+  - cmd: echo.
 
     # This script will delete already existing tag with its release when it already exist.
     # This should be done to correctly update tag details and to avoid mixed release under same tag (if one fail).
     # The principle is to delete the tag and release whenever we found it and the commit hash is different than current.
     # Do not modify this script for security reason
-    ps: >-
+  - ps: >-
         function Delete-Github-Release($gitHubRepository, $releaseVersion, $commitHash, $token){
             $baseReleaseUrl = "https://api.github.com/repos/$gitHubRepository/releases";
             $ref_endpoint = "https://api.github.com/repos/$gitHubRepository/git/refs/tags"
